@@ -1,0 +1,41 @@
+:root {
+  --background-primary: #f3f4f6; /* light gray */
+  --background-secondary: #ffffff; /* white */
+  --text-primary: #111827; /* almost black */
+  --text-secondary: #6b7280; /* medium gray */
+  --border-color: #d1d5db; /* light gray */
+  --accent-color: #4f46e5; /* indigo */
+  --accent-color-hover: #4338ca;
+  --danger-color: #ef4444;
+  --danger-color-hover: #dc2626;
+}
+
+/* Override those variables when the .dark class is present */
+html.dark {
+  --background-primary: #111827; /* almost black */
+  --background-secondary: #1f2937; /* dark gray */
+  --text-primary: #f9fafb; /* almost white */
+  --text-secondary: #9ca3af; /* medium gray */
+  --border-color: #374151;
+  --accent-color: #6366f1; /* lighter indigo */
+  --accent-color-hover: #4f46e5;
+  --danger-color: #f87171;
+  --danger-color-hover: #ef4444;
+}
+
+/* Basic body styles to use the variables */
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  background-color: var(--background-primary);
+  color: var(--text-primary);
+  transition: background-color 0.2s, color 0.2s;
+}
+
+#root {
+  min-height: 100vh;
+}
