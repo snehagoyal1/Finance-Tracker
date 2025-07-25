@@ -57,7 +57,7 @@ A complete, secure, and performance-optimized personal finance management applic
 
 All backend routes are documented using **Swagger UI**. After starting the backend server, access the documentation at:
 
-👉 [http://localhost:5000/api-docs](http://localhost:5000/api-docs)
+👉 [https://finance-tracker-cypc.onrender.com/api-docs/](https://finance-tracker-cypc.onrender.com/api-docs)
 
 Includes:
 
