@@ -7,15 +7,33 @@
     border-bottom: 1px solid var(--border-color);
     color: var(--text-primary);
 }
+
+.leftSection {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.menuButton {
+    display: none; /* Hidden on desktop */
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-primary);
+}
+
 .brand {
     font-size: 1.5rem;
     font-weight: 700;
 }
+
 .userInfo {
     display: flex;
     align-items: center;
     gap: 1rem;
 }
+
 .themeButton, .logoutButton {
     padding: 0.5rem 1rem;
     border: 1px solid var(--border-color);
@@ -25,6 +43,26 @@
     cursor: pointer;
     transition: background-color 0.2s, color 0.2s;
 }
+
 .themeButton:hover, .logoutButton:hover {
     background-color: var(--background-primary);
+}
+
+/* --- Media Query for tablets and smaller --- */
+@media (max-width: 768px) {
+    .menuButton {
+        display: block; /* Show hamburger menu */
+    }
+}
+
+@media (max-width: 640px) {
+    .navbar {
+        padding: 1rem;
+    }
+    .brand {
+        font-size: 1.25rem;
+    }
+    .userInfo span {
+        display: none; /* Hide name on small screens */
+    }
 }

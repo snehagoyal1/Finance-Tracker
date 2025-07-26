@@ -1,27 +1,78 @@
 .sidebar {
     width: 240px;
-    background-color: #1f2937; /* Dark sidebar for both themes for contrast */
+    background-color: #1f2937;
     color: #f9fafb;
-    padding: 1.5rem;
+    padding: 1.5rem 1rem;
     height: 100vh;
     display: flex;
     flex-direction: column;
+    flex-shrink: 0;
+    transition: transform 0.3s ease-in-out;
+    z-index: 1001; /* Ensure sidebar is on top of content */
 }
+
+.navList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
 .navLink {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
     padding: 0.75rem 1rem;
     border-radius: 0.375rem;
     color: #d1d5db;
     text-decoration: none;
+    font-weight: 500;
     transition: background-color 0.2s, color 0.2s;
     margin-bottom: 0.5rem;
-    list-style: none;
 }
+
 .navLink:hover {
     background-color: #374151;
     color: #ffffff;
 }
+
 .active {
     background-color: var(--accent-color);
     color: #ffffff;
+}
+
+.overlay {
+    display: none; /* Hidden on desktop */
+}
+
+/* --- Media Query for tablets and smaller --- */
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        transform: translateX(-100%); /* Hide sidebar off-screen */
+    }
+
+    .sidebarOpen {
+        transform: translateX(0); /* Show sidebar */
+    }
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        display: block;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    .overlayVisible {
+        opacity: 1;
+        pointer-events: auto;
+    }
 }

@@ -1,26 +1,40 @@
-
 .chartContainerFull {
     background-color: var(--background-secondary);
     padding: 1.5rem;
     border-radius: 0.5rem;
     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-    margin-bottom: 2rem; /* Add space below the full-width chart */
+    margin-bottom: 2rem;
 }
 
 .chartsGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    grid-template-columns: repeat(2, 1fr); /* Two columns on desktop */
     gap: 2rem;
 }
+
 .chartContainer {
     background-color: var(--background-secondary);
     padding: 1.5rem;
     border-radius: 0.5rem;
     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
 }
+
 .chartTitle {
     margin-bottom: 1.5rem;
     font-size: 1.25rem;
     font-weight: 600;
     color: var(--text-primary);
+}
+
+/* --- Media Query for tablets and smaller --- */
+@media (max-width: 1024px) {
+    .chartsGrid {
+        grid-template-columns: 1fr; /* Stack to one column */
+    }
+}
+
+@media (max-width: 640px) {
+    .chartContainer, .chartContainerFull {
+        padding: 1rem; /* Less padding on mobile */
+    }
 }
