@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAllUsers, updateUserRole, AdminUserView, UserRole } from '../api/admin.api';
+import CacheStats from '../components/admin/CacheStats'; // Import the new component
 import styles from './AdminPage.module.css';
 
 const AdminPage: React.FC = () => {
@@ -35,7 +36,6 @@ const AdminPage: React.FC = () => {
         navigate(`/admin/user/${userId}/transactions`, { state: { userName } });
     };
 
-    // --- NEW FUNCTION ---
     const handleRoleChange = async (userId: number, newRole: UserRole) => {
         try {
             await updateUserRole(userId, newRole);
@@ -56,8 +56,13 @@ const AdminPage: React.FC = () => {
 
     return (
         <div className={styles.container}>
-            <h1 className={styles.title}>Admin Panel - User Management</h1>
+            <h1 className={styles.title}>Admin Panel</h1>
+
+            {/* Render the new cache statistics component */}
+            <CacheStats />
+
             <div className={styles.tableContainer}>
+                <h2 className={styles.subTitle}>User Management</h2>
                 <table className={styles.table}>
                     <thead>
                         <tr>
@@ -75,10 +80,10 @@ const AdminPage: React.FC = () => {
                                 <td>{user.name}</td>
                                 <td>{user.email}</td>
                                 <td>
-                                    {/* --- UPDATED ROLE DISPLAY --- */}
                                     <select
                                         value={user.role}
                                         onChange={(e) => handleRoleChange(user.id, e.target.value as UserRole)}
+                                        onClick={(e) => e.stopPropagation()} // Prevent row click when changing role
                                         className={styles.roleSelect}
                                     >
                                         <option value="user">User</option>
