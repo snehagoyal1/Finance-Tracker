@@ -1,6 +1,8 @@
+// src/pages/AdminPage.tsx
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getAllUsers, AdminUserView } from '../api/admin.api';
+import { getAllUsers, updateUserRole, AdminUserView, UserRole } from '../api/admin.api';
 import styles from './AdminPage.module.css';
 
 const AdminPage: React.FC = () => {
@@ -25,9 +27,28 @@ const AdminPage: React.FC = () => {
         fetchUsers();
     }, [fetchUsers]);
 
-    const handleUserClick = (userId: number, userName: string) => {
-        // Navigate to the user's transaction page and pass the name in the state
+    const handleUserClick = (e: React.MouseEvent, userId: number, userName: string) => {
+        // Prevent navigation if the click was on the dropdown
+        if ((e.target as HTMLElement).tagName === 'SELECT') {
+            return;
+        }
         navigate(`/admin/user/${userId}/transactions`, { state: { userName } });
+    };
+
+    // --- NEW FUNCTION ---
+    const handleRoleChange = async (userId: number, newRole: UserRole) => {
+        try {
+            await updateUserRole(userId, newRole);
+            // Update the user's role in the local state for an immediate UI update
+            setUsers(currentUsers =>
+                currentUsers.map(user =>
+                    user.id === userId ? { ...user, role: newRole } : user
+                )
+            );
+        } catch (err) {
+            console.error("Failed to update user role", err);
+            // Optionally, show an error message to the admin
+        }
     };
 
     if (loading) return <p>Loading admin data...</p>;
@@ -49,11 +70,22 @@ const AdminPage: React.FC = () => {
                     </thead>
                     <tbody>
                         {users.map(user => (
-                            <tr key={user.id} onClick={() => handleUserClick(user.id, user.name)} className={styles.clickableRow}>
+                            <tr key={user.id} onClick={(e) => handleUserClick(e, user.id, user.name)} className={styles.clickableRow}>
                                 <td>{user.id}</td>
                                 <td>{user.name}</td>
                                 <td>{user.email}</td>
-                                <td><span className={styles.roleBadge}>{user.role}</span></td>
+                                <td>
+                                    {/* --- UPDATED ROLE DISPLAY --- */}
+                                    <select
+                                        value={user.role}
+                                        onChange={(e) => handleRoleChange(user.id, e.target.value as UserRole)}
+                                        className={styles.roleSelect}
+                                    >
+                                        <option value="user">User</option>
+                                        <option value="admin">Admin</option>
+                                        <option value="read-only">Read-Only</option>
+                                    </select>
+                                </td>
                                 <td>{new Date(user.createdAt).toLocaleDateString()}</td>
                             </tr>
                         ))}
